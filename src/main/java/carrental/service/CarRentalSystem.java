@@ -1,10 +1,12 @@
 package carrental.service;
 
+import carrental.model.Booking;
 import carrental.model.Car;
 import carrental.model.Customer;
 import carrental.model.Rental;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +17,14 @@ public class CarRentalSystem {
 
     private final List<Car>      cars      = new ArrayList<>();
     private final List<Customer> customers = new ArrayList<>();
-    private final List<Rental>   rentals   = new ArrayList<>();
+    private final List<Rental> rentals = new ArrayList<>();
+    private final List<Booking> bookings = new ArrayList<>();
+
+
+
+
+    // Existing code unchanged above this line
+
 
     public CarRentalSystem() {
         cars.add(new Car("C001", "Toyota",   "Camry",    60.0,  "Sedan"));
@@ -82,11 +91,46 @@ public class CarRentalSystem {
         return rentals.stream().mapToDouble(Rental::getTotalPrice).sum();
     }
 
-    public List<Rental> getActiveRentals()  {
-        return rentals.stream().filter(r -> r.getStatus() == Rental.Status.ACTIVE).collect(Collectors.toList());
+    // ── Booking Operations ────────────────────────────────────────────────
+    public Booking createBooking(String carId, String customerName, String phone, LocalDate start, LocalDate end) {
+        if (!start.isBefore(end) && !start.isEqual(end)) {
+            throw new IllegalArgumentException("Start date must be before or equal to end date");
+        }
+        Car car = findCarById(carId)
+                .orElseThrow(() -> new IllegalArgumentException("Car not found: " + carId));
+        // Check overlapping active bookings for same car
+        boolean overlap = bookings.stream()
+                .filter(b -> b.isActive() && b.getCar().getCarId().equalsIgnoreCase(carId))
+                .anyMatch(b -> !(end.isBefore(b.getStartDate()) || start.isAfter(b.getEndDate()));
+        if (overlap) {
+            throw new IllegalStateException("Car is already booked for the selected period");
+        }
+        String bookingId = "B" + String.format("%03d", bookings.size() + 1);
+        Booking booking = new Booking(bookingId, car, customerName, phone, start, end);
+        bookings.add(booking);
+        return booking;
+    }
+
+    public List<Booking> getActiveBookings() {
+        return bookings.stream().filter(Booking::isActive).collect(Collectors.toList());
+    }
+
+    public List<Booking> getAllBookings() {
+        return List.copyOf(bookings);
     }
     public List<Rental> getRentalHistory()  {
         return rentals.stream().filter(r -> r.getStatus() == Rental.Status.RETURNED).collect(Collectors.toList());
     }
     public List<Rental> getAllRentals() { return List.copyOf(rentals); }
+
+    // ── Active Rentals ────────────────────────────────────────────────────────
+    public List<Rental> getActiveRentals() {
+        return rentals.stream()
+                .filter(r -> r.getStatus() == Rental.Status.ACTIVE)
+                .collect(Collectors.toList());
+    }
+
+
+
+
 }

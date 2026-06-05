@@ -2,8 +2,11 @@ package carrental.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 public class Rental {
+    private final String rentalId = UUID.randomUUID().toString();
+    public String getRentalId() { return rentalId; }
     public enum Status { ACTIVE, RETURNED }
 
     private static final DateTimeFormatter FMT =
