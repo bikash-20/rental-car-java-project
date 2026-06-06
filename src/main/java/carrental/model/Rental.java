@@ -37,6 +37,8 @@ public class Rental {
 
     public String getRentedAtStr()   { return rentedAt != null ? rentedAt.format(FMT) : "-"; }
     public String getReturnedAtStr() { return returnedAt != null ? returnedAt.format(FMT) : "-"; }
+    public LocalDateTime getRentedAt() { return rentedAt; }
+
 
     public void markReturned() {
         this.returnedAt = LocalDateTime.now();
