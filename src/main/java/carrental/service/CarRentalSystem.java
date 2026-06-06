@@ -99,9 +99,16 @@ public class CarRentalSystem {
         Car car = findCarById(carId)
                 .orElseThrow(() -> new IllegalArgumentException("Car not found: " + carId));
         // Check overlapping active bookings for same car
-        boolean overlap = bookings.stream()
-                .filter(b -> b.isActive() && b.getCar().getCarId().equalsIgnoreCase(carId))
-                .anyMatch(b -> !(end.isBefore(b.getStartDate()) || start.isAfter(b.getEndDate()));
+        boolean overlap = false;
+        for (Booking b : bookings) {
+            if (b.isActive() && b.getCar().getCarId().equalsIgnoreCase(carId)) {
+                // If the new booking dates intersect with an existing active booking
+                if (!(end.isBefore(b.getStartDate()) || start.isAfter(b.getEndDate()))) {
+                    overlap = true;
+                    break;
+                }
+            }
+        }
         if (overlap) {
             throw new IllegalStateException("Car is already booked for the selected period");
         }
