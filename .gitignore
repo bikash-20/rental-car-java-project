@@ -1,19 +1,10 @@
-cat <<'EOF' > .gitignore
-cat <<'EOF' > .gitignore
-# Maven / Gradle build output
 target/
 *.class
 *.jar
 *.war
-
-# Downloaded Maven distribution you placed in the repo
 apache-maven-*.tar.gz
-
-# IDE / OS artefacts
 *.iml
 .idea/
 .DS_Store
-
-# Logs / temporary files
 logs/
 tmp/
