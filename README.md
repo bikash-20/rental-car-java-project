@@ -70,15 +70,4 @@ AutoRentWeb/
 
 ---
 
-## Quick Git Commands to Publish
-```bash
-cd "AutoRentWeb"
-# initialize if not already
-git init
-git add .
-git commit -m "Add README with project features and Java skill showcase"
-git remote add origin https://github.com/bikash-20/rental-car-java-project.git
-git push -u origin main
-```
 
-Now the repository on GitHub reflects the latest README and code.
