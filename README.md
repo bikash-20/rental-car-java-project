@@ -1,76 +1,84 @@
-# 🚗 AutoRent Web — Spring Boot
+# 🚗 AutoRent Web – Spring Boot Demo
 
-Car Rental System converted from JavaFX desktop → full web app.
-Works on **any device** — phone, tablet, laptop.
+**A full‑stack Java car‑rental web application** that demonstrates modern Java development skills:
+
+- **Spring Boot 3.2.5** backend with RESTful controllers.
+- **Thymeleaf** templating for server‑side rendered UI.
+- **JPA/Hibernate** persistence using an embedded H2 database.
+- **PDF generation** with iText 7 (receipts, invoices).
+- **Service layer** (`CarRentalSystem`, `PdfService`, `RevenueService`) showing clean architecture.
+- **Unit‑test ready** project structure ready for JUnit 5.
+- **Maven** build lifecycle, custom `Procfile` for Railway deployment.
+- **Responsive UI** built with vanilla HTML/CSS/JS (no heavy front‑end framework).
 
 ---
 
-## Run Locally
-
+## How to Run Locally
 ```bash
-cd AutoRentWeb
+cd "AutoRentWeb"
+# Build and start the application
 mvn spring-boot:run
 ```
-
-Then open your browser: **http://localhost:8080**
+Open your browser at **http://localhost:8080**.
 
 ---
 
-## Deploy to Railway (Free — Get a Live URL)
-
-### Step 1 — Push to GitHub
-1. Create a free account at https://github.com
-2. Create a new repository called `autorent`
-3. Run these commands in your terminal:
-
-```bash
-cd AutoRentWeb
-git init
-git add .
-git commit -m "AutoRent web app"
-git remote add origin https://github.com/YOUR_USERNAME/autorent.git
-git push -u origin main
-```
-
-### Step 2 — Deploy on Railway
-1. Go to https://railway.app → Sign up free (use GitHub login)
-2. Click **"New Project"** → **"Deploy from GitHub repo"**
-3. Select your `autorent` repository
-4. Railway auto-detects Java + Maven → builds automatically
-5. Click **"Generate Domain"** → you get a URL like:
-   `https://autorent-production.up.railway.app`
-
-**Share that URL** — anyone on any device can use your app! ✅
+## Deploy on Railway (Free Live URL)
+1. Push the repo to GitHub (see below).
+2. Sign in at https://railway.app and create a new project → *Deploy from GitHub*.
+3. Select the repository; Railway auto‑detects a Java + Maven project, builds, and provides a live URL.
 
 ---
 
 ## Project Structure
-
 ```
 AutoRentWeb/
-├── pom.xml                          ← Maven config (Spring Boot)
-├── Procfile                         ← Railway/Heroku deploy config
+├── pom.xml                # Maven dependencies (Spring Boot, JPA, iText, H2)
+├── Procfile               # Railway/Heroku start command
 └── src/main/
     ├── java/carrental/
-    │   ├── App.java                 ← Spring Boot entry point
-    │   ├── model/                   ← Car, Customer, Rental (reused)
-    │   ├── service/                 ← CarRentalSystem (reused)
-    │   └── controller/              ← Web routes
+    │   ├── App.java                 # Spring Boot entry point
+    │   ├── model/                   # Car, Booking, Rental entities
+    │   ├── service/                 # Business logic (CarRentalSystem, PdfService, RevenueService)
+    │   └── controller/              # Web controllers (UI endpoints)
     └── resources/
-        ├── templates/               ← HTML pages (Thymeleaf)
-        └── static/
-            ├── css/style.css        ← Mobile-first styling
-            └── js/app.js            ← Price preview + mobile nav
+        ├── templates/               # Thymeleaf HTML pages
+        └── static/                  # CSS & JS assets
 ```
 
 ---
 
 ## Tech Stack
+| Layer      | Technology                     |
+|------------|--------------------------------|
+| Backend    | Java 17 + Spring Boot 3       |
+| Persistence| JPA/Hibernate + H2 (in‑memory) |
+| Templating | Thymeleaf                     |
+| PDF        | iText 7                       |
+| Build      | Maven                         |
+| Deploy     | Railway.app (free)            |
 
-| Layer | Technology |
-|---|---|
-| Backend | Java 17 + Spring Boot 3 |
-| Templating | Thymeleaf |
-| Frontend | HTML + CSS + Vanilla JS |
-| Build | Maven |
-| Deploy | Railway.app (free) |
+---
+
+## What This Shows About My Java Skills
+- **Clean architecture**: separation of concerns via service, controller, and model layers.
+- **Dependency management**: Maven with proper version constraints, custom repositories.
+- **Database handling**: JPA annotations, repository pattern, transaction management.
+- **File I/O & PDF generation**: dynamic receipt creation.
+- **DevOps basics**: Docker‑compatible `Procfile`, CI‑ready repository, Railway deployment.
+- **Testing mindset**: project scaffold ready for unit/integration tests.
+
+---
+
+## Quick Git Commands to Publish
+```bash
+cd "AutoRentWeb"
+# initialize if not already
+git init
+git add .
+git commit -m "Add README with project features and Java skill showcase"
+git remote add origin https://github.com/bikash-20/rental-car-java-project.git
+git push -u origin main
+```
+
+Now the repository on GitHub reflects the latest README and code.
